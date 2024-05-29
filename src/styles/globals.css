@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--best-blue: 113, 229, 237;
+	--best-orange: 250, 164, 58;
+}
+
+@layer base {
+	* {
+		@apply cursor-default select-none;
+	}
+}
+
+@layer components {
+	.no-scrollbar {
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+
+	.special-price {
+		@apply relative rounded-lg;
+
+		&::before {
+			@apply content-[''] rounded-lg absolute inset-0 border-2 border-transparent;
+
+			mask: linear-gradient(#fff 0 0) padding-box,
+				linear-gradient(#fff 0 0);
+			background: linear-gradient(
+					to right,
+					rgb(var(--best-orange)),
+					rgb(var(--best-blue))
+				)
+				border-box;
+			mask-composite: exclude;
+		}
+	}
+}
