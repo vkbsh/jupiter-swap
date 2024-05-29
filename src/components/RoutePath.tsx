@@ -54,7 +54,7 @@ export default function RoutePath({ quoteResponse }: Props) {
 	const isMultiRoute = listReceive?.length > 2;
 
 	return (
-		<div className="h-full flex flex-col gap-2">
+		<div className="overflow-hidden h-full flex flex-col gap-2">
 			<motion.div
 				layout
 				animate={{
@@ -77,7 +77,7 @@ export default function RoutePath({ quoteResponse }: Props) {
 								return (
 									<motion.div
 										layout
-										key={i}
+										key={name + price + i}
 										exit={{
 											opacity: 0,
 											height: 0,

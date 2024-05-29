@@ -1,20 +1,12 @@
 'use client';
 
 import { Inter } from 'next/font/google';
-import { QueryClientProvider, QueryClient } from 'react-query';
+import QueryProvider from 'components/provider/QueryProvider';
 import WalletProvider from 'components/provider/WalletProvider';
 
 import 'styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
-
-const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			refetchOnWindowFocus: false,
-		},
-	},
-});
 
 export default function RootLayout({
 	children,
@@ -27,9 +19,9 @@ export default function RootLayout({
 			className="h-full overflow-hidden sm:overflow-auto bg-dark-bg">
 			<body className={`h-full ${inter.className}`}>
 				<WalletProvider>
-					<QueryClientProvider client={queryClient}>
+					<QueryProvider>
 						<main className="h-full p-5">{children}</main>
-					</QueryClientProvider>
+					</QueryProvider>
 				</WalletProvider>
 			</body>
 		</html>

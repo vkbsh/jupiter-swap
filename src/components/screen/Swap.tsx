@@ -16,20 +16,20 @@ import RefreshButton from 'components/RefreshButton';
 
 import { Token, getQuote } from 'lib/jupiter';
 import { getAssetsByOwner } from 'lib/helius';
+import { queryClient } from 'components/provider/QueryProvider';
 
 import jupiterTokens from 'lib/jupiter/jupiter-strict-tokens.json';
 
 export default function SwapScreen() {
+	const { publicKey } = useWallet();
 	const { connection } = useConnection();
-	const { connected, connecting, publicKey } = useWallet();
+	const publicKeyString = publicKey?.toBase58?.() || '';
 
 	const [value, setValue] = useState('');
 	const [toTotal, setToTotal] = useState(null);
 	const [fromTotal, setFromTotal] = useState(null);
 	const [inputToken, setInputToken] = useState(jupiterTokens[0] as Token);
 	const [outputToken, setOutputToken] = useState(jupiterTokens[1] as Token);
-
-	const publicKeyString = publicKey?.toBase58?.() || '';
 
 	const { data: quoteResponse, refetch: fetchQuote } = useQuery(
 		['getQuote', inputToken?.address, outputToken?.address, value],
@@ -61,6 +61,7 @@ export default function SwapScreen() {
 	const swapUI = () => {
 		setInputToken(outputToken);
 		setOutputToken(inputToken);
+		queryClient.removeQueries('getQuote');
 	};
 
 	const handleInputChange = useCallback((value: string) => {
