@@ -1,12 +1,13 @@
 'use client';
 
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useQuery } from 'react-query';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 
 import { QuoteResponse, swap, trans } from 'lib/jupiter';
+import { queryClient } from 'components/provider/QueryProvider';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { use, useEffect } from 'react';
 
 type Props = {
 	value: string;
@@ -61,6 +62,7 @@ export default function Button({
 	useEffect(() => {
 		if (fee) {
 			setValue(null);
+			queryClient.removeQueries('swap');
 		}
 	}, [fee]);
 
